@@ -2,15 +2,17 @@ class Register(val name: String) {
   val bits = 24
   var state = 0
 
-  def load(value: Int) {
-    state = value
-  }
+  def load(value: Int) = state = value
 
-  def xor(other: Int) {
-    state = state ^ other
-  }
+  def load(other: Register): Unit = load(other.state)
 
-  override def toString: String = Register.formattedBinaryString(state.toBinaryString, bits)
+  def xor(value: Int) = state ^= value
+
+  def xor(other: Register): Unit = xor(other.state)
+
+  def copy(other: Register) = state = other.state
+
+  override def toString = name + ": " + Register.formattedBinaryString(state.toBinaryString, bits)
 }
 
 object Register {
